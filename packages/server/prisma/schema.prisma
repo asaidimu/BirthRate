@@ -1,0 +1,96 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model LoginGroup {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdOn DateTime @default(now())
+}
+
+model Login {
+  id        Int      @id @default(autoincrement())
+  groups    Int[]
+  username  String   @unique
+  password  String
+  active    Boolean  @default(false)
+  createdOn DateTime @default(now())
+  User      User[]
+}
+
+model User {
+  id          Int           @id
+  fullName    String
+  email       String        @unique
+  login       Login         @relation(fields: [id], references: [id])
+  UserSession UserSession[]
+}
+
+model UserSession {
+  session_id Int       @id @default(autoincrement())
+  user       User      @relation(fields: [userId], references: [id])
+  userId     Int
+  started    DateTime  @default(now())
+  ended      DateTime?
+}
+
+// Define your data model using Prisma schema language
+
+model Person {
+  id               Int     @id @default(autoincrement())
+  nationalIDNumber String?
+  nationality      String
+  gender           Gender
+  firstName        String
+  middleName       String
+  lastName         String
+
+  // Relation with BirthRecord model
+  birthRecords BirthRecord[] // One-to-Many relation
+  father       BirthRecord[]      @relation("father") // One-to-Many relation
+  mother       BirthRecord[]      @relation("mother") // One-to-Many relation
+  informant    BirthCertificate[] @relation("informant") // One-to-Many relation
+}
+
+model BirthRecord {
+  id           Int      @id @default(autoincrement())
+  owner        Person   @relation(fields: [ownerId], references: [id])
+  ownerId      Int
+  dateOfBirth  DateTime
+  placeOfBirth String
+  weightInKg   Float
+  lengthInCm   Float
+
+  // Relation with Person model for father
+  father   Person? @relation("father", fields: [fatherId], references: [id])
+  fatherId Int?
+
+  // Relation with Person model for mother
+  mother           Person?            @relation("mother", fields: [motherId], references: [id])
+  motherId         Int?
+  birthCertificate BirthCertificate[] // One-to-Many relation
+}
+
+model BirthCertificate {
+  id                   Int         @id @default(autoincrement())
+  birthRecord          BirthRecord @relation(fields: [birthRecordId], references: [id])
+  birthRecordId        Int         @unique
+  registrationNumber   String
+  registrationDate     DateTime
+  registrationDistrict String
+  informant            Person      @relation("informant", fields: [informantId], references: [id])
+  informantId          Int
+  serialNumber         String
+}
+
+// Enum for Gender
+enum Gender {
+  Male
+  Female
+}

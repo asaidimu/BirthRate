@@ -1,0 +1,61 @@
+{
+  "name": "@syllogi/client",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Saidimu <47994458+asaidimu@users.noreply.github.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "test": "echo test",
+    "prebuild:ci": "yarn clean",
+    "clean": "rm -rf dist",
+    "build:ci": "vite build",
+    "postbuild:ci": "rm -rf src",
+    "build:test": "pwd",
+    "build:docker": "cd ../../ && yarn docker-ctx -p '@syllogi/client' -c packages/client/Dockerfile | docker build --build-arg PACKAGE_NAME='@syllogi/client' - -t syllogi-client",
+    "serve": "vite preview",
+    "ci": "yarn install --immutable"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "@tailwindcss/typography": "^0.5.9",
+    "@types/crypto-js": "^4.1.1",
+    "@types/sharedworker": "^0.0.79",
+    "autoprefixer": "^10.4.2",
+    "babel-preset-solid": "^1.4.6",
+    "daisyui": "latest",
+    "docker-ctx": "^1.0.1",
+    "eslint": "^8.46.0",
+    "fake-indexeddb": "^4.0.0",
+    "postcss": "^8.4.5",
+    "postcss-cli": "^9.1.0",
+    "postcss-import": "^14.0.2",
+    "prettier": "^2.5.1",
+    "regenerator-runtime": "0.13.9",
+    "solid-devtools": "^0.24.7",
+    "tailwindcss": "^3.0.16",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.7",
+    "vite-plugin-live-reload": "^3.0.2",
+    "vite-plugin-solid": "^2.5.0"
+  },
+  "dependencies": {
+    "@felte/solid": "^1.2.10",
+    "@felte/validator-zod": "^1.0.16",
+    "@solidjs/router": "^0.8.2",
+    "@syllogi/validator": "^0.0.0",
+    "chart.js": "^4.3.2",
+    "solid-icons": "^1.0.11",
+    "solid-js": "^1.6.6",
+    "xlsx": "^0.18.5",
+    "zod": "^3.21.4"
+  }
+}

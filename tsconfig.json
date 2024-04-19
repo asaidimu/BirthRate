@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "declaration": true,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "noLib": false,
+        "sourceMap": true
+    },
+    "exclude": ["node_modules", "**/*.spec.ts"]
+
+
+}

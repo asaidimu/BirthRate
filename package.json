@@ -1,0 +1,44 @@
+{
+    "name": "syllogi",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+        "packages/*",
+        "packages/server/dist"
+    ],
+    "devDependencies": {
+        "docker-ctx": "^1.0.1",
+        "typescript": "^5.1.6"
+    },
+    "scripts": {
+        "ci": "yarn install --immutable"
+    },
+    "release": {
+        "branches": [
+            "main"
+        ],
+        "plugins": [
+            "@semantic-release/commit-analyzer",
+            "@semantic-release/release-notes-generator",
+            [
+                "@semantic-release/changelog",
+                {
+                    "changelogFile": "CHANGELOG.md"
+                }
+            ],
+            [
+                "@semantic-release/git",
+                {
+                    "assets": [
+                        "CHANGELOG.md",
+                        "dist.package.json"
+                    ],
+                    "message": "chore(release): Release v${nextRelease.version}\n\n${nextRelease.notes}"
+                }
+            ]
+        ]
+    },
+    "packageManager": "yarn@3.4.1"
+}
